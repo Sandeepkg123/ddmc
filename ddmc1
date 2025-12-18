@@ -167,5 +167,131 @@ STOP
 
 END
 
+// factorial.c
+#include <lpc214x.h>
+#include <stdio.h>
+
+int main()
+{
+    int i, num = 5, fact = 1;
+
+    for (i = 1; i <= num; i++)
+    {
+        fact = fact * i;
+    }
+
+    printf("factorial = %d", fact);
+
+    while (1);
+}
+
+
+
+
+// bubble_sort_ascending.c
+#include <lpc214x.h>
+#include <stdio.h>
+
+int main()
+{
+    unsigned long array[] = {0xBBBBBBBB, 0x22222222, 0x33333333, 0x66666666, 0x11111111};
+    unsigned long temp;
+    int i, j;
+
+    for (i = 0; i < 5 - 1; i++)
+    {
+        for (j = 0; j < 5 - 1; j++)
+        {
+            if (array[j] > array[j + 1])
+            {
+                temp = array[j + 1];
+                array[j + 1] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+
+    while (1);
+}
+
+
+
+
+
+// bubble_sort_descending.c
+#include <lpc214x.h>
+#include <stdio.h>
+
+int main()
+{
+    unsigned long array[] = {0xBBBBBBBB, 0x22222222, 0x33333333, 0x66666666, 0x11111111};
+    unsigned long temp;
+    int i, j;
+
+    for (i = 0; i < 5 - 1; i++)
+    {
+        for (j = 0; j < 5 - 1; j++)
+        {
+            if (array[j] < array[j + 1])
+            {
+                temp = array[j + 1];
+                array[j + 1] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+
+    while (1);
+}
+
+
+
+
+
+
+
+“Develop an ALP to count the number of 1’s and 0’s in a consecutive memory location.”
+
+        AREA    ONES_ZEROS, CODE, READONLY
+        ENTRY
+
+START
+        LDR     R0, =INPUT
+        LDRB    R1, [R0]
+
+        MOV     R2, #0
+        MOV     R3, #0
+        MOV     R4, #8
+
+REPEAT
+        RORS    R1, R1, #1
+        BCS     ONE
+        ADD     R3, R3, #1
+        B       NEXT
+
+ONE
+        ADD     R2, R2, #1
+
+NEXT
+        SUB     R4, R4, #1
+        CMP     R4, #0
+        BNE     REPEAT
+
+STOP
+        B       STOP
+
+INPUT
+        DCB     0xA8
+
+        END
+
+
+
+
+
+
+
+
+
 
 
