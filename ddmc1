@@ -13,3 +13,159 @@ BACK
 STOP
     B     STOP
 END
+
+
+//16 bit binary
+AREA MULTIPLY, CODE, READONLY
+ENTRY
+START
+    LDRH R1, NUM1
+    LDRH R2, NUM2
+    MUL  R0, R1, R2
+
+STOP
+    B STOP
+
+AREA DATA1, DATA, READONLY
+NUM1 DCW 0x0123
+NUM2 DCW 0x002A
+ALIGN
+END
+
+//basic artimatic program
+AREA SIMPLE, CODE, READONLY
+ENTRY
+
+MOV R0, #10
+MOV R1, #3
+
+AND R0, R1
+ORR R0, R1
+EOR R0, R1
+ADD R0, R1
+SUB R0, R1
+
+MUL R2, R0, R1
+
+STOP B STOP
+END
+
+
+largest and smallest 
+
+; LARGEST.S - Program to find the largest value in an array
+
+    AREA LARGEST, CODE, READONLY
+    ENTRY
+    
+START
+    MOV R5, #6              
+    LDR R1, =VALUE1         
+    LDR R2, [R1], #4        
+    
+LOOP
+    LDR R4, [R1], #4        
+    CMP R2, R4
+    BHI LOOP
+    MOV R2, R4             
+    
+    SUBS R5, R5, #1       
+    CMP R5, #0             
+    BNE LOOP               
+    
+    LDR R4, =RESULT        
+    STR R2, [R4]            
+    
+    NOP                    
+    NOP                     
+    NOP                     
+    
+HERE
+    B HERE                  ; Infinite loop (end of program)
+
+; Data section
+VALUE1
+    DCD 0x44444444         
+    DCD 0x22222222       
+    DCD 0x11111111          ; Third value
+    DCD 0x33333333          ; Fourth value
+    DCD 0x77777777          ; Fifth value (largest)
+    DCD 0x55555555          ; Sixth value
+
+    AREA DATA2, DATA, READWRITE
+RESULT
+    DCD 0x0                 ; Variable to store the result
+
+    END
+
+smallest
+
+; SMALLEST.S - Program to find the smallest value in an array
+
+    AREA SMALLEST, CODE, READONLY
+    ENTRY
+    
+START
+    MOV R5, #6              ; Set counter to 6 (number of elements)
+    LDR R1, =VALUE1         ; Load address of array into R1
+    LDR R2, [R1], #4        ; Load first element into R2, increment pointer
+    
+LOOP
+    LDR R4, [R1], #4        ; Load next element into R4, increment pointer
+    CMP R2, R4              ; Compare current min (R2) with new element (R4)
+    BLO LOOP                ; If R2 < R4, skip update and continue loop
+    MOV R2, R4              ; Otherwise, update min: R2 = R4
+    
+    SUBS R5, R5, #1         ; Decrement counter
+    CMP R5, #0              ; Check if counter is zero
+    BNE LOOP                ; If not zero, continue loop
+    
+    LDR R4, =RESULT         ; Load address of RESULT into R4
+    STR R2, [R4]            ; Store the smallest value at RESULT
+    
+    NOP                     ; No operation
+    NOP                     ; No operation
+    NOP                     ; No operation
+    
+HERE
+    B HERE                  ; Infinite loop (end of program)
+
+; Data section
+VALUE1
+    DCD 0x44444444          ; First value
+    DCD 0x22222222          ; Second value
+    DCD 0x11111111          ; Third value (smallest)
+    DCD 0x33333333          ; Fourth value
+    DCD 0x77777777          ; Fifth value
+    DCD 0x55555555          ; Sixth value
+
+    AREA DATA2, DATA, READWRITE
+RESULT
+    DCD 0x0                 ; Variable to store the result
+
+    END
+
+
+
+
+factoril
+AREA    FACTORIAL, CODE, READONLY
+ENTRY
+
+START
+    MOV     R0, #5
+    MOV     R1, R0
+
+FACT
+    SUBS    R1, R1, #1
+    MUL     R0, R0, R1
+    CMP     R1, #1
+    BNE     FACT
+
+STOP
+    B       STOP
+
+END
+
+
+
