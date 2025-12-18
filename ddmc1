@@ -1,0 +1,15 @@
+10 intergger
+
+AREA   START
+START
+    MOV   R1, #10
+    MOV   R2, #0
+
+BACK
+    ADD   R2, R2, R1
+    SUB   R1, R1, #1
+    BNE   BACK
+
+STOP
+    B     STOP
+END
